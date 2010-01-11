@@ -46,19 +46,20 @@ class ITBot(JabberBot):
         return str(jid).split('/')[0]
 
     def unknown_command(self, mess, cmd, args):
-        if int(cmd):
-            try:
-                t = Ticket.objects.get(pk=int(cmd))
-                s = "Ticket %s\n" %(t.pk)
-                s += "Company: %s\n" %(t.company.name)
-                s += "Contact: %s\n" %(t.contact.username)
-                s += "Priority: %s\n" %(t.priority)
-                s += "Summary: %s\n" %(t.summary)
-                s += "Description: %s\n" %(t.description)
-                return s
-            except Ticket.DoesNotExist:
-                return "That ticket number does not exst"
-        else:
+        try:
+            if int(cmd):
+                try:
+                    t = Ticket.objects.get(pk=int(cmd))
+                    s = "Ticket %s\n" %(t.pk)
+                    s += "Company: %s\n" %(t.company.name)
+                    s += "Contact: %s\n" %(t.contact.username)
+                    s += "Priority: %s\n" %(t.priority)
+                    s += "Summary: %s\n" %(t.summary)
+                    s += "Description: %s\n" %(t.description)
+                    return s
+                except Ticket.DoesNotExist:
+                    return "That ticket number does not exst"
+        except:
             return "Unknown command"
 
 # Proposed commands
