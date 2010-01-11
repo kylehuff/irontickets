@@ -1,0 +1,49 @@
+{% extends "irontickets/base.html" %}
+{% block extratitle %}{{ company.name }}{% endblock %}
+{% block jqready %}
+    $("#tabs").tabs();
+    $('.nicelist').flexigrid({showTableToggleBtn: false});
+{% endblock %}
+{% block sidemenu %}
+<div class="ui-widget">
+    <div class="ui-widget-header ui-corner-top">
+        Actions
+    </div>
+    <div class="ui-state-highlight ui-corner-bottom">
+        <a href="{% url companynew %}"><span class="ui-icon-person"></span>New Company</a><br>
+        <A HREF="{% url companyedit company.pk %}"><span class="ui-icon-person"></span>Edit Company</A><br>
+        <A HREF="{% url companyticketnew company.pk %}"><span class="ui-icon-plus"></span>New ticket</A><br>
+        <A HREF="{% url usernew %}"><span class="ui-icon-plus"></span>New contact</A><br>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="ui-widget">
+    <div class="ui-widget-header ui-corner-top">
+        <span class="ui-icon ui-icon-grip-dotted-vertical"></span>
+        [{{ company.type }}] <A HREF="{% url companydetail company.pk %}">{{ company.name }}</A> ({{ company.status.name }})
+    </div>            
+    <div class="ui-widget-content ui-corner-bottom">
+        {% with company as object %}
+            {% include "irontickets/elements/crud-header.html" %}
+        {% endwith %}
+    </div>
+</div>
+{% with company.ticket_set.all as ticket_list %}
+    {% with company.itprofile_set.all as profile_list %}
+        <div id="tabs">
+            <ul>
+                <li><a href="#tab-1">Tickets ({% firstof ticket_list.count "0" %})</a></li>
+                <li><a href="#tab-2">Contacts ({% firstof profile_list.count "0" %})</a></li>
+            </ul>
+            <div id="tab-1">
+                {% include "irontickets/elements/ticket_table.html" %}
+            </div>
+            <div id="tab-2">
+                {% include "irontickets/elements/user_table_via_profile.html" %}
+            </div>
+        </div>
+    {% endwith %}
+{% endwith %}
+
+{% endblock %}

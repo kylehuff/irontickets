@@ -1,0 +1,9 @@
+{% for notify in ticket.notify_set.all %}
+<li>
+    <form action="{% url notifydelete notify.pk %}" method="POST" class="notifydeleteform">
+        {% csrf_token %}
+        <input type="image" class="icon" name="submit" src="{{ MEDIA_URL }}/irontickets/icons/user_remove.png" />
+        {% firstof notify.email notify.user %}
+    </form>
+</li>
+{% endfor %}

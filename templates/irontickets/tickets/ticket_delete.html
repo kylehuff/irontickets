@@ -1,0 +1,11 @@
+{% extends "irontickets/formbase.html" %}
+{% block sidemenu %}
+{% endblock %}
+{% block content %}
+    {% include "irontickets/elements/ticket_header.html" %}
+    Are you sure you want to delete this ticket?
+    This will delete the ticket, and any associated comments, and documents.<br>
+    {% with "Delete" as submitname %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}

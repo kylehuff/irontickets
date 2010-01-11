@@ -1,0 +1,18 @@
+<div class="ui-widget">
+    <div class="ui-widget-header ui-corner-top">
+        <span class="ui-icon ui-icon-grip-dotted-vertical"></span>
+        <A HREF="{% url companydetail ticket.company.pk %}">{{ ticket.company.name }}</A>
+        {% if ticket.contact %}
+            <A HREF="{% url userdetail ticket.contact.pk %}"> ({{ ticket.contact }})</A>
+        {% else %}
+            (Nobody)
+        {% endif %}
+    </div>            
+    <div class="ui-widget-content ui-corner-bottom">
+        {% with ticket as object %}
+            {% include "irontickets/elements/crud-header.html" %}
+        {% endwith %}
+        <hr>
+        #{{ ticket.pk }} - {{ ticket.summary }}
+    </div>
+</div>

@@ -1,0 +1,11 @@
+{% autoescape off%}Ticket {{ ticket.pk }} has been created.
+
+Company: {{ ticket.company.name }}
+Contact: {{ ticket.contact.username }}
+
+Priority: {{ ticket.priority }}
+Summary: {{ ticket.summary }}
+Detail: {{ ticket.description }}
+
+{% firstof proto 'https' %}://{{ site.name }}{% url ticketdetail ticket.pk %}
+{% endautoescape %}

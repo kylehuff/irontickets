@@ -1,0 +1,4 @@
+<span style="font-size: 75%">
+    {% if object.createdby %}<div>Created by <A HREF="{% url userdetail object.createdby.pk %}"><span class="ui-icon ui-icon-person"></span>{{ object.createdby }}</A> <span class="ui-icon ui-icon-clock" title="{{ object.created }}"></span>{{ object.created|timesince }} ago</div>{% endif %}
+    {% if object.updatedby %}<div>Updated by <A HREF="{% url userdetail object.updatedby.pk %}"><span class="ui-icon ui-icon-person"></span>{{ object.updatedby }}</A> <span class="ui-icon ui-icon-clock" title="{{ object.updated }}"></span>{{ object.updated|timesince }} ago</div>{% endif %}
+</span>

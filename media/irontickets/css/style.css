@@ -1,0 +1,81 @@
+.logocolor1 {
+    color: #93BC0C;
+}
+
+.logocolor2 {
+	color: #0000FF;
+}
+
+.fg-button {
+    outline: 0;
+    margin: 0 -4px 0 0;
+    padding: .4em .8em;
+    text-decoration: none !important;
+    cursor: pointer;
+    position: relatove;
+    text-align: right;
+}
+
+/* override jquery icon display */
+.ui-icon {
+    display: inline-block;
+}
+
+
+html, body {
+    margin:0;
+    padding:0;
+} 
+
+/*#header {*/
+/*	position: relative;*/
+/*	width: 100%;*/
+/*} */
+
+
+#wrap {
+    width:95%;
+    margin:0 auto;
+}
+
+#header {
+    padding:5px 10px;
+}
+
+h1 {
+    margin:0;
+}
+
+#id_honeypot {
+    visibility: hidden;
+}
+
+#nav {
+    text-align: center;
+}
+
+#main {
+    float:left;
+    width: 80%;
+    padding:10px;
+}
+
+h2 {
+    margin:0 0 1em;
+}
+
+#sidebar {
+    float:right;
+    width:15%;
+    padding:10px;
+}
+
+#footer {
+    clear:both;
+    padding:5px 10px;
+    text-align: center;
+}
+
+* html #footer {
+    height:1px;
+}

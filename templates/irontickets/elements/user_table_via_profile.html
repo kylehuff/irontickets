@@ -1,0 +1,20 @@
+<TABLE class="nicelist">
+    <THEAD>
+        <TR>
+            <TH width="25">ID</TH>
+            <TH width="150">Username</TH>
+            <TH width="200">E-Mail</TH>
+            <TH width="75">Last Name</TH>
+            <TH width="75">First Name</TH>
+        </TR>
+    </THEAD>
+    {% for prof in profile_list %}
+        <TR class="{% cycle row1,row2%}">
+            <TD><A HREF="{% url userdetail prof.pk %}">{{ prof.pk }}</A></TD>
+            <TD>{{ prof.user.username }}</TD>
+            <TD>{{ prof.user.email }}</TD>
+            <TD>{{ prof.user.last_name }}</TD>
+            <TD>{{ prof.user.first_name }}</TD>
+        </TR>
+    {% endfor %}
+</TABLE>

@@ -1,0 +1,17 @@
+{% extends "irontickets/base.html" %}
+{% block jqready %}
+    $('.nicelist').flexigrid({title: 'Users', showTableToggleBtn: false});
+{% endblock %}
+{% block sidemenu %}
+    <div class="ui-widget">
+        <div class="ui-widget-header ui-corner-top">
+            <span class="ui-icon ui-icon-triangle-1-s"></span>Ticket Menu
+        </div>
+        <div class="ui-state-highlight ui-corner-bottom">
+            <a href="{% url usernew %}">New User</a>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    {% include "irontickets/elements/user_table.html" %}
+{% endblock %}

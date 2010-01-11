@@ -1,0 +1,5 @@
+
+Activation Key: {{ activation_key }}
+Expires in: {{ expiration_days }}
+Site: {{ site }}
+

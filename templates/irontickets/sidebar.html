@@ -1,0 +1,30 @@
+<div class="ui-widget">
+    <div class="ui-widget-header ui-corner-top">
+        <span class="ui-icon ui-icon-triangle-1-s"></span>Ticket Stats
+    </div>
+    <div class="ui-state-highlight ui-corner-bottom" style="margin-bottom: 5px;">
+        Opened: {{ tickets_opened.count}}<br>
+        Closed:  {{ tickets_closed.count }}<br>
+        Tickets: {{ tickets.count }}<br>
+    </div>
+</div>
+<div class="ui-widget">
+    <div class="ui-widget-header ui-corner-top">
+        <span class="ui-icon ui-icon-triangle-1-s"></span>Company Stats
+    </div>
+    <div class="ui-state-highlight ui-corner-bottom" style="margin-bottom: 5px;">
+        Companies: {{ companies.count }}<br>
+        {% for ct in companytypes %}
+            {{ ct }}: {{ ct.company_set.count }}<br>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="ui-widget">
+    <div class="ui-widget-header ui-corner-top">
+        <span class="ui-icon ui-icon-triangle-1-s"></span>Contact Stats
+    </div>
+    <div class="ui-state-highlight ui-corner-bottom" style="margin-bottom: 5px;">
+        Contacts: {{ contacts.count }}
+    </div>
+</div>

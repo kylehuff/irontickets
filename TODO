@@ -1,0 +1,64 @@
+v0.2
+* Make links stand out
+* Addresses for companies/contacts
+* Phone numbers for companies/contacts
+* Contacts
+  * Change e-mail, phone, address, job title, password
+  * Change basic prefs, theme
+* Companies
+  * New address
+  * New phone
+* Cleanup/review login system, templates, etc...
+* Teams (Company has an account rep, a lead tech, etc...)
+* Mass create tickets ('Patch CVE-blah', select companies to create for...)
+* Create mass tickets (Select company, type one ticket title per line...)
+* Make avatars and a few other plugin apps optional
+
+
+v0.3
+* Setup permissions
+* Tracking tickets from other vendors, suppliers, and support companies
+* Ticket dependencies
+  * New child ticket
+  * New parent ticket
+  * Duplicate of
+* Companies
+  * Sites/addresses  
+* Review and fix model names.  Correct case.
+* Search (Haystack?)
+* Companies
+  * Comments
+* Contacts
+  * Comments
+  * Picture/avatar
+* Layout a few nice HTML e-mails
+* Tickets via e-mail
+* Reports
+* Notification improvement (e-mail, xmpp, snpp, sms, etc...)
+
+Future / Ideas / Notes:
+* Customer Data import
+* Auditing
+* django-invoice
+* App to take a screenshot and auto-create a new ticket. (Maybe java applet?)
+* Office Inventory
+* Client Inventory (OpenAudit?)
+* Scripts to integrate nagios alerts into tickets
+* Pending tickets queue.  (Turn potential tickets into actual tickets, deny others)
+  - This could be a mail feed from a client admin box.  Don't want things like Win SBS reports
+    turning into tickets, but you want messages from the RAID controller becoming tickets
+  * RE or rules for turning pending tickets into tickets
+* Track technician time
+* Managed Service Agreements/Accounts
+* Self-signup / integration with client authentication (so clients can use their existing windows domain username and password)
+  - Partially complete with the POP3 SSL Auth Backend
+* Project tracking (turn a .project file into tickets/assignments)
+* Ordering and Shipping
+* Document storage
+* Knowledge base
+* Outlook calendar integration
+  - Or iCal/ICS/WebDAV
+* Outlook contact integration
+  - Gen vcards?
+* Integration with Nagios monitoring
+* snppsend to message text pagers?

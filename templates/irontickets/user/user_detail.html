@@ -1,0 +1,82 @@
+{% extends "irontickets/base.html" %}
+{% block jqready %}
+    $("#tabs").tabs();
+    $('.nicelist').flexigrid({showTableToggleBtn: false});
+{% endblock %}
+{% block sidemenu %}
+<div class="ui-widget">
+    <div class="ui-widget-header ui-corner-top">
+        <span class="ui-icon ui-icon-triangle-1-s"></span>Actions
+    </div>
+    <div class="ui-state-highlight ui-corner-bottom">
+        <a href="{% url usernew %}">New User</a><br>
+        <a href="{% url useredit usr.pk %}">Edit User</a>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+    <a name="UserDetail"></a>
+    <h2><img class="icon" src="{{ MEDIA_URL }}/irontickets/icons/user.png" />{{ usr.username }}  ({{ usr.email }})</h2>
+    {% if usr.last_name and usr.first_name %}
+        <p>{{ usr.last_name }}, {{ usr.first_name }}</p>
+    {% endif %}
+    {% if usr.get_profile %}
+        <A HREF="{% url companydetail usr.get_profile.company.pk %}">{{ usr.get_profile.company.name }}</A><br>
+    {% endif %}
+    <code>
+        Joined: {{ usr.date_joined|timesince }}<br>
+    </code>
+
+<!--
+u.address_set                      
+u.get_all_permissions(            
+u.get_full_name(           
+u.groups                           
+u.has_usable_password(             
+u.is_active                        
+u.is_staff                         
+u.is_superuser                     
+u.itprofile_set
+u.last_login
+u.message_set
+u.phone_set
+u.user_permissions
+-->
+
+    <div id="tabs">
+        <ul>
+            <li><a href="#tab-1">Tickets ({% firstof usr.ticket_contact_set.count "0" %})</a></li>
+{% if user.is_staff or user.is_superuser %}
+            <li><a href="#tab-2">Comments ({% firstof usr.comment_comments.count "0" %})</a></li>
+            <li><a href="#tab-3">Attachments  ({% firstof usr.created_attachments.count "0" %})</a></li>
+            <li><a href="#tab-4">Assignments ({% firstof usr.ticket_assigned_set.count "0" %})</a></li>
+{% endif %}
+        </ul>
+        <div id="tab-1">
+            {% with usr.ticket_contact_set.all as ticket_list %}
+                {% include "irontickets/elements/ticket_table.html" %}
+            {% endwith %}
+        </div>
+        <div id="tab-2">
+            {% with usr.comment_comments.all as comment_list %}
+                {% with 1 as show_ticket_link %}
+                    {% include "irontickets/elements/comment_table.html" %}
+                {% endwith %}
+            {% endwith %}
+        </div>
+{% if user.is_staff or user.is_superuser %}
+        <div id="tab-3">
+            {% with usr.created_attachments.all as attachment_list %}
+                {% with 1 as show_ticket_link %}
+                    {% include "irontickets/elements/attachment_table.html" %}
+                {% endwith %}
+            {% endwith %}
+        </div>
+        <div id="tab-4">
+            {% with usr.ticket_assigned_set.all as ticket_list %}
+                {% include "irontickets/elements/ticket_table.html" %}
+            {% endwith %}
+        </div>
+{% endif %}
+    </div>
+{% endblock %}

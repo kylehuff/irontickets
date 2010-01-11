@@ -1,0 +1,70 @@
+{% extends "irontickets/base.html" %}
+{% load avatar_tags %}
+{% block jqready %}
+    $("#tabs").tabs();
+    $('.nicelist').flexigrid({showTableToggleBtn: false});
+{% endblock %}
+{% block sidemenu %}
+<div class="ui-widget">
+    <div class="ui-widget-header ui-corner-top">
+        <span class="ui-icon ui-icon-triangle-1-s"></span>Actions
+    </div>
+    <div class="ui-state-highlight ui-corner-bottom">
+        <a href="{% url password %}">Change password</a>
+        <a href="{% url avatar_change %}">Change avatar</a>
+        <a href="{% url avatar_delete %}">Delete avatar</a>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+    <a name="UserDetail"></a>
+    <h2>
+        <img class="icon" src="{% avatar_url user %}" />{{ user.username }}  ({{ user.email }})
+    </h2>
+    {% if user.last_name and user.first_name %}
+        <p>{{ user.last_name }}, {{ user.first_name }}</p>
+    {% endif %}
+    {% if user.get_profile %}
+        <A HREF="{% url companydetail user.get_profile.company.pk %}">{{ user.get_profile.company.name }}</A><br>
+    {% endif %}
+    <code>
+        Joined: {{ user.date_joined|timesince }}<br>
+    </code>
+
+    <div id="tabs">
+        <ul>
+            <li><a href="#tab-1">Tickets ({% firstof user.ticket_contact_set.count "0" %})</a></li>
+{% if user.is_staff or user.is_superuser %}
+            <li><a href="#tab-2">Comments ({% firstof user.comment_comments.count "0" %})</a></li>
+            <li><a href="#tab-3">Attachments  ({% firstof user.created_attachments.count "0" %})</a></li>
+            <li><a href="#tab-4">Assignments ({% firstof user.ticket_assigned_set.count "0" %})</a></li>
+{% endif %}
+        </ul>
+        <div id="tab-1">
+            {% with user.ticket_contact_set.all as ticket_list %}
+                {% include "irontickets/elements/ticket_table.html" %}
+            {% endwith %}
+        </div>
+        <div id="tab-2">
+            {% with user.comment_comments.all as comment_list %}
+                {% with 1 as show_ticket_link %}
+                    {% include "irontickets/elements/comment_table.html" %}
+                {% endwith %}
+            {% endwith %}
+        </div>
+{% if user.is_staff or user.is_superuser %}
+        <div id="tab-3">
+            {% with user.created_attachments.all as attachment_list %}
+                {% with 1 as show_ticket_link %}
+                    {% include "irontickets/elements/attachment_table.html" %}
+                {% endwith %}
+            {% endwith %}
+        </div>
+        <div id="tab-4">
+            {% with user.ticket_assigned_set.all as ticket_list %}
+                {% include "irontickets/elements/ticket_table.html" %}
+            {% endwith %}
+        </div>
+{% endif %}
+    </div>
+{% endblock %}

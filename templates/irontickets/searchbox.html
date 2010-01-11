@@ -1,0 +1,9 @@
+<form action="#" class="searchform">
+    {% csrf_token %}
+    <input name="search_query" class="textbox" type="text" />
+    {% with "search" as buttonname %}
+        {% with "Search" as buttonvalue %}
+            {% include "irontickets/elements/formbutton.html" %}
+        {% endwith %}
+    {% endwith %}
+</form>

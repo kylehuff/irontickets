@@ -1,0 +1,12 @@
+{% autoescape off%}
+Ticket {{ ticket.pk }} has been updated.
+
+Company: {{ ticket.company.name }}
+Contact: {{ ticket.contact.firstname }} {{ ticket.contact.lastname }}
+Summary: {{ ticket.summary }}
+
+The following comment has been added to ticket {{ ticket.pk }} by {{ comment.user.username }}:
+{{ comment.comment }}
+
+{% firstof proto 'https' %}://{{ site.name }}{% url ticketdetail ticket.pk %}
+{% endautoescape %}

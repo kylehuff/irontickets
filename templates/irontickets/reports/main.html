@@ -1,0 +1,49 @@
+{% extends "irontickets/base.html" %}
+{% block jqready %}
+    $('#report').visualize({
+        type: 'bar',
+        pieMargin: 10,
+        width: 200,
+        height: 200,
+        title: 'Tickets by Company'
+    });	
+{% endblock %}
+{% block content %}
+    <table id="report">
+        <caption>Tickets by Status grouped by Company</caption>
+        <thead>
+            <tr>
+                <td></td>
+                <th>New</th>
+                <th>Open</th>
+                <th>Closed</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>JoeCo1</th>
+                <td>15</td>
+                <td>40</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <th>MyCo</th>
+                <td>2</td>
+                <td>15</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <th>CoR</th>
+                <td>9</td>
+                <td>1</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <th>Test1</th>
+                <td>3</td>
+                <td>5</td>
+                <td>2</td>
+            </tr>		
+        </tbody>
+    </table>
+{% endblock %}

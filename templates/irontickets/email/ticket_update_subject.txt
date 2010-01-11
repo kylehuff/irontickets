@@ -1,0 +1,1 @@
+{% autoescape off%}Updated: {{ ticket.pk }} ({{ ticket.status }}) {{ ticket.priority }} - {{ ticket.summary  }}{% endautoescape %}

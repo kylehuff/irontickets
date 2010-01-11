@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="shortcut icon" href="{{ MEDIA_URL }}/favicon.ico">
+    
+    <link type="text/css" href="{{ MEDIA_URL }}/irontickets/css/{% firstof user.get_profile.theme 'start' %}/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
+    
+    <script type="text/javascript" src="{{ MEDIA_URL }}/irontickets/js/jquery-1.3.2.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/irontickets/js/jquery-ui-1.7.2.custom.min.js"></script>
+    <link type="text/css" href="{{ MEDIA_URL }}/irontickets/css/style.css" rel="stylesheet" />
+    
+    <title>IronTickets: {% block extratitle %}{% endblock %}</title>
+</head>
+<body>
+    <div id="wrap" class="ui-corner-all">
+        <div id="header">
+            <div class="ui-corner-all ui-widget-content" style="text-align: center;">
+                <div id="header-links" style="float: right; text-align: right;">
+                    <!-- Header -->
+                </div>
+                <div id="header-logo" style="text-align: left; padding-left: 10px;">
+                    <h1><a href="{% url home %}"><span class="logocolor1">I</span>ron<span class="logocolor2">T</span>ickets</a></h1>
+                    <p id="slogan">for <span class="logocolor1">I</span><span class="logocolor2">T</span> Solutions Providers...</p>
+                </div>
+            </div>
+        </div>
+        <div id="nav">
+            {% include "irontickets/menu.html" %}
+        </div>
+        <div id="main" class="ui-corner-all ui-widget-content">
+            {% block content %}
+                ERROR!
+            {% endblock %}
+        </div>
+        <div id="sidebar" class="ui-corner-all ui-widget-content">
+            <!-- Side Menu -->
+        </div>
+        <p></p>
+        <div id="footer" class="ui-corner-all ui-widget-content">
+            {% include "irontickets/copyright.html" %}
+        </div>
+    </div>
+</body>
+</html>

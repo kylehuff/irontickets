@@ -1,0 +1,18 @@
+<TABLE class="nicelist">
+    <THEAD>
+        <TR>
+            <TD>ID</TD>
+            <TD>Location</TD>
+            <TD>Number</TD>
+            <TD>Extension</TD>
+        </TR>
+    </THEAD>
+    {% for phone in phone_list %}
+        <TR class="{% cycle row1,row2%}">
+            <TD><A HREF="{# url phonedetail phone.pk #}">{{ phone.pk }}</A></TD>
+            <TD>{{ phone.Location }}</TD>
+            <TD>{{ phone.Number }}</TD>
+            <TD>{{ phone.Extension|default_if_none:"" }}</TD>
+        </TR>
+    {% endfor %}
+</TABLE>

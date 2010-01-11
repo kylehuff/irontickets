@@ -1,0 +1,12 @@
+{% extends "irontickets/formbase.html" %}
+{% block sidemenu %}
+<div class="ui-widget">
+    <div class="ui-widget-header ui-corner-top">
+        <span class="ui-icon ui-icon-triangle-1-s"></span>Actions
+    </div>
+    <div class="ui-state-highlight ui-corner-bottom">
+        <a href="{% url companynew %}"><span class="ui-icon-person"></span>New Company</a><br>
+        <A HREF="{% url companydetail company.pk %}"><span class="ui-icon-arrow-1-w"></span>Back</A>
+    </div>
+</div>
+{% endblock %}

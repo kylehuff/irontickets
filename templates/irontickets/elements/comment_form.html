@@ -1,0 +1,23 @@
+{% load comments %}
+<form action="{% comment_form_target %}" method="POST">
+    {% csrf_token %}
+    <div class="ui-widget">
+        <div class="ui-widget-header ui-corner-top">
+            <span class="ui-icon ui-icon-comment"></span>Comment
+        </div>
+        <div class="ui-corner-bottom">
+            {{ commentform.comment }}
+        </div>
+    </div>
+    {% with "post" as buttonname %}
+    {% with "Add comment" as buttonvalue %}
+    {% include "irontickets/elements/formbutton.html" %}
+    {% endwith %}
+    {% endwith %}
+    {{ commentform.honeypot }} 
+    {{ commentform.content_type }} 
+    {{ commentform.object_pk }} 
+    {{ commentform.timestamp }} 
+    {{ commentform.security_hash }} 
+    <input type="hidden" name="next" value="{% url ticketdetail ticket.pk %}" />
+</form>

@@ -1,0 +1,21 @@
+<TABLE class="nicelist">
+    <THEAD>
+        <TR>
+            <TH width="25">ID</TH>
+            <TH width="35">Type</TH>
+            <TH width="250">Name</TH>
+            <TH width="100">Phone</TH>
+            <TH width="100">Fax</TH>
+        </TR>
+    </THEAD>
+    {% for company in company_list %}
+        <TR class="{% cycle row1,row2%}">
+            <TD><A HREF="{% url companydetail company.pk %}">{{ company.pk }}</A></TD>
+            <TD>{{ company.type }}</TD>
+            <TD><A HREF="{% url companydetail company.pk %}">{{ company.name }}</A></TD>
+            <TD>{{ company.phone }}</TD>
+            <TD>{{ company.fax }}</TD>
+        </TR>
+    {% endfor %}
+</TABLE>
+

@@ -1,0 +1,114 @@
+{% extends "irontickets/base.html" %}
+{% load comments %}
+{% load ticket_to_link %}
+{% load attachments_tags %}
+{% block jqready %}
+    $("#tabs").tabs();
+    $('.nicelist').flexigrid({showTableToggleBtn: false});
+{% endblock %}
+{% block sidemenu %}
+    <div class="ui-widget">
+        <div class="ui-widget-header ui-corner-top">
+            <span class="ui-icon ui-icon-triangle-1-s"></span>Menu
+        </div>
+        <div class="ui-state-highlight ui-corner-bottom" style="margin-bottom: 5px;">
+            <A HREF="{% url ticketnew %}"><span class="ui-icon ui-icon-note"></span>New Ticket</A><br>
+            <A HREF="{% url ticketdelete ticket.pk %}"><span class="ui-icon ui-icon-trash"></span>Delete Ticket</A><br>
+        </div>
+    </div>
+    <div class="ui-widget">
+        <div class="ui-widget-header ui-corner-top">
+            <span class="ui-icon ui-icon-triangle-1-s"></span>Info
+        </div>
+        <div class="ui-state-highlight ui-corner-bottom" style="margin-bottom: 5px;">
+            <table>
+                <tr>
+                    <td>Assigned</td>
+                    <td>
+                        <span class="ui-icon ui-icon-person"></span>
+                        {% if ticket.assignedto %}
+                            <A HREF="{% url userdetail ticket.assignedto.pk %}">{{ ticket.assignedto }}</A>
+                        {% else %}
+                            Unassigned
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Priority</td>
+                    <td>{{ ticket.priority }}</td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td>{{ ticket.status.name }}</td>
+                </tr>
+                {% if ticket.duplicateof %}
+                    <tr>
+                        <td colspan="2">Dupe: <A HREF="{% url ticketdetail ticket.duplicateof.pk %}" title="{{ ticket.duplicateof.summary }}">{{ ticket.duplicateof.pk }} - {{ ticket.duplicateof.summary|truncatewords:4 }}</A></td>
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+    <div class="ui-widget">
+        <div class="ui-widget-header ui-corner-top">
+            <span class="ui-icon ui-icon-triangle-1-s"></span>Actions
+        </div>
+        <div class="ui-state-highlight ui-corner-bottom">
+            Reassign<br>
+            <FORM ACTION="{% url ticketstatusedit ticket.pk %}" METHOD="POST">
+                {% csrf_token %}
+                <select name="assignedto">
+                    <option value="">----</option>
+                    {% for employee in EMPLOYEES %}
+                        <option value="{{ employee.pk }}"{% ifequal employee.pk ticket.assignedto.pk %} selected{% endifequal %}>{{ employee.username }}</option>
+                    {% endfor %}
+                </select><br>
+                Priority<br>
+                <select name="priority">
+                    {% for priority in TICKET_PRIORITIES %}
+                        <option value="{{ priority }}"{% ifequal priority ticket.priority %} selected{% endifequal %}>{{ priority }}</option>
+                    {% endfor %}
+                </select><br>
+                Status<br>
+                <select name="status">
+                    {% for status in TICKET_STATUSES %}
+                        <option value="{{ status.name }}"{% ifequal status.name ticket.status.name %} selected{% endifequal %}>{{ status.name }}</option>
+                    {% endfor %}
+                </select><br>
+                <input type="submit" name="submit" value="Change">
+            </FORM>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    {% include "irontickets/elements/ticket_header.html" %}
+    <div class="ui-widget" style="padding-top: 5px;">
+        <div class="ui-widget-header ui-corner-top">
+            <span class="ui-icon ui-icon-grip-dotted-vertical"></span>Ticket Detail
+        </div>
+        <div class="ui-widget-content ui-corner-bottom">
+            <p>{{ ticket.description|linebreaksbr|ticket_to_link }}</p>
+        </div>
+    </div>
+    <hr>
+    {% get_comment_count for ticket as comment_count %}
+    {% get_comment_list for ticket as comment_list %}
+    {% get_comment_form for ticket as commentform %}
+    {% get_attachments_for ticket as "attachment_list" %}
+    <div id="tabs">
+        <ul>
+            <li><a href="#tab-1">Notes ({% firstof comment_count "0" %})</a></li>
+            <li><a href="#tab-2">Attachments ({% firstof attachment_list.count "0" %})</a></li>
+        </ul>
+        <div id="tab-1">
+            {% include "irontickets/elements/comment_table.html" %}
+            {% include "irontickets/elements/comment_form.html" %}
+        </div>
+        <div id="tab-2">
+            {% if attachment_list %}
+                {% include "irontickets/elements/attachment_table.html" %}
+            {% endif %}
+            {% attachment_form ticket %}
+        </div>
+    </div>
+{% endblock %}

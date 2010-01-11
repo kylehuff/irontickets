@@ -1,0 +1,15 @@
+{% extends "irontickets/base.html" %}
+{% block sidemenu %}{% endblock %}
+{% block content %}
+    <FORM ID="form" ACTION="{% firstof formaction "." %}" METHOD="POST">
+        {% csrf_token %}
+            <TABLE>
+                {{ form.as_table }}
+                <TR>
+                    <TH><label for="submit">Action</label></TH>
+                    <TD><input type="submit" name="submit" value="{% firstof submitname "Submit" %}" /></TD>
+                    {% block hiddenfields %}{% endblock %}
+                </TR>
+            </TABLE>
+    </FORM>
+{% endblock %}

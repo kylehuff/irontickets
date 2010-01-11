@@ -1,0 +1,26 @@
+<TABLE class="nicelist">
+    <THEAD>
+        <TR>
+            <TH width="25">ID</TH>
+            <TH width="50">Status</TH>
+            <TH width="50">Priority</TH>
+            <TH width="250">Description</TH>
+            <TH width="100">Company</TH>
+            <TH width="100">Age</TH>
+            <TH width="50">Assigned</TH>
+        </TR>
+    </THEAD>
+    <TBODY>
+        {% for ticket in ticket_list %}
+            <TR id="ticket-{{ ticket.pk }}" class="{% cycle row1,row2%}">
+                <TD><A HREF="{% url ticketdetail ticket.pk %}">{{ ticket.pk }}</A></TD>
+                <TD>{{ ticket.status }}</TD>
+                <TD class="priority-{{ ticket.priority|lower }}">{{ ticket.priority }}</TD>
+                <TD><A HREF="{% url ticketdetail ticket.pk %}">{{ ticket.summary|truncatewords:"10" }}</A></TD>
+                <TD>{{ ticket.company }}</TD>
+                <TD>{{ ticket.created|timesince}}</TD>
+                <TD>{{ ticket.assignedto }}</TD>
+            </TR>
+        {% endfor %}
+    </TBODY>
+</TABLE>

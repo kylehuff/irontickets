@@ -1,0 +1,18 @@
+<TABLE class="nicelist">
+    <THEAD>
+        <TR>
+            <TH width="25">ID</TH>
+            <TH width="50">First</TH>
+            <TH width="50">Last</TH>
+            <TH width="200">Company</TH>
+        </TR>
+    </THEAD>
+    {% for contact in contact_list %}
+        <TR class="{% cycle row1,row2%}">
+            <TD><A HREF="{% url contactdetail contact.pk %}">{{ contact.pk }}</A></TD>
+            <TD>{{ contact.FirstName }}</TD>
+            <TD>{{ contact.LastName }}</A></TD>
+            <TD>{{ contact.Company }}</TD>
+        </TR>
+    {% endfor %}
+</TABLE>

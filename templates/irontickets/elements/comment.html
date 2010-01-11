@@ -1,0 +1,12 @@
+{% load ticket_to_link %}
+<div class="ui-widget-header ui-corner-top">
+    {% if comment.user %}<A HREF="{% url userdetail comment.user.pk %}"><span class="ui-icon ui-icon-person"></span>{{ comment.user }}</A>{% else %}system{% endif %}  <span class="ui-icon ui-icon-clock" title="{{ comment.submit_date }}"></span> {{ comment.submit_date|timesince }} ago{% if show_ticket_link and comment.content_object %} on ticket <A HREF="{% url ticketdetail comment.content_type_id %}">{{ comment.content_object.pk }} ({{ comment.content_object.summary|truncatewords:5 }})</A>{% endif %}<br>
+</div>
+<div class="ui-corner-bottom" style="margin-bottom: 5px;">
+    <span class="ui-icon ui-icon-grip-dotted-vertical"></span>
+    {% if comment.is_removed %}
+        (comment deleted)
+    {% else %}
+        {{ comment.comment|linebreaksbr|ticket_to_link }}
+    {% endif %}
+</div>

@@ -1,0 +1,13 @@
+{% for comment in comment_list %}
+    <div class="ui-widget">
+        {% if comment.is_public %}
+            {% include "irontickets/elements/comment.html" %}
+        {% else %}
+            {% if user.is_staff %}
+                {% include "irontickets/elements/comment.html" %}
+            {% else %}
+                (private comment)
+            {% endif %}
+        {% endif %}
+    </div>
+{% endfor %}

@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <!--
+        Who knew all it took was a stupid meta header to get IE to display
+        pages like every other browser on the planet.  ...well almost.
+    -->
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+    <link rel="shortcut icon" href="{{ MEDIA_URL }}/favicon.ico">
+    <link type="text/css" href="{{ MEDIA_URL }}/irontickets/css/{% firstof user.get_profile.theme 'start' %}/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
+    <link type="text/css"  href="{{ MEDIA_URL }}/irontickets/css/visualize.jQuery.css" rel="stylesheet" />
+    <link type="text/css" href="{{ MEDIA_URL }}/flexigrid/css/flexigrid.css" rel="stylesheet" />
+    <script type="text/javascript" src="{{ MEDIA_URL }}/irontickets/js/jquery-1.3.2.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/irontickets/js/jquery-ui-1.7.2.custom.min.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/irontickets/js/visualize.jQuery.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/ajax_validation/js/jquery-ajax-validation.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/flexigrid/js/flexigrid.js"></script>
+    <link type="text/css" href="{{ MEDIA_URL }}/irontickets/css/style.css" rel="stylesheet" />
+    {% block headextjs %}{% endblock %}
+    <title>IronTickets: {{ title }}{% block extratitle %}{% endblock %}</title>
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            {% block jqready %}
+            {% endblock %}
+        });
+    </script>
+{% block docjs %}
+{% endblock %}
+    <div id="wrap" class="ui-corner-all">
+        <div id="header">
+            <div class="ui-corner-all ui-widget-content" style="text-align: center;">
+                <div id="header-links" style="float: right; text-align: right;">
+                    <p>
+                        {% if user.is_authenticated %}
+                            {% if user.get_profile %}
+                                <A HREF="">
+                            {% endif %}
+                            {{ user.username }}
+                            {% if user.get_profile %}</A> | {% endif %}
+                            <A HREF="{% url signout %}">[Sign out]</A>
+                        {% else %}
+                            <A HREF="{% url signin %}">[Sign in]</A>
+                        {% endif %}
+                    </p>
+                    <p>
+                        {% include "irontickets/searchbox.html" %}
+                    </p>
+                </div>
+                <div id="header-logo" style="text-align: left; padding-left: 10px;">
+                    <h1><a href="{% url home %}"><span class="logocolor1">I</span>ron<span class="logocolor2">T</span>ickets</a></h1>
+                    <p id="slogan">for <span class="logocolor1">I</span><span class="logocolor2">T</span> Solutions Providers...</p>
+                </div>
+            </div>
+        </div>
+        <div id="nav"><!-- id="menu" -->
+            {% include "irontickets/menu.html" %}
+        </div>
+        <div id="main" class="ui-corner-all ui-widget-content">
+            {% block content %}
+                {% include "irontickets/defaultcontent.html" %}
+            {% endblock %}
+        </div>
+        <div id="sidebar" class="ui-corner-all ui-widget-content">
+            {% block sidemenu %}
+                {% include "irontickets/sidebar.html" %}
+            {% endblock %}
+        </div>
+        <p></p>
+        <div id="footer" class="ui-corner-all ui-widget-content">
+            {% include "irontickets/copyright.html" %}
+        </div>
+    </div>
+</body>
+</html>

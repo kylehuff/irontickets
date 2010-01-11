@@ -1,0 +1,10 @@
+{% extends "irontickets/formbase.html" %}
+{% block sidemenu %}
+{% endblock %}
+{% block content %}
+    <h2>#{{ user.pk }} {{ user.first_name }} {{ user.last_name }}{% if user.get_profile %} - {{ user.get_profile.Company.name }}{% endif %}</h2>
+    Are you sure you want to delete this contact?
+    {% with "Delete" as submitname %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}

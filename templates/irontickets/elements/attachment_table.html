@@ -1,0 +1,33 @@
+<table class="nicelist">
+    <tr>
+        <td>Name</td>
+        <td>Uploader</td>
+        <td>Date</td>
+        {% if show_ticket_link %}
+            <td>Attached to</td>
+        {% endif %}
+        <td></td>
+    </tr>
+    {% for attachment in attachment_list %}
+        <tr>
+            <td>
+                <span class="ui-icon ui-icon-document"></span><a href="{{ attachment.attachment_file.url }}">{{ attachment.filename }}</a>
+            </td>
+            <td>
+                <A HREF="{% url userdetail attachment.creator.pk %}"><span class="ui-icon ui-icon-person"></span>{{ attachment.creator }}</A>
+            </td>
+            <td>
+                <span class="ui-icon ui-icon-clock" title="{{ attachment.created }}"></span>{{ attachment.created|timesince }} ago
+            </td>
+            {% if show_ticket_link %}
+                <td>
+                    <A HREF="{% url ticketdetail attachment.content_type_id %}">{{ attachment.content_object.pk }} - {{ attachment.content_object.summary|truncatewords:5 }}</A>
+                </td>
+            {% endif %}
+            <td>
+                <A HREF="{% url delete_attachment attachment.pk %}?next={{ request.path }}"><span class="ui-icon ui-icon-trash"></span></A>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
