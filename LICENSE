@@ -1,2 +1,9 @@
 The code I've written for IronTickets is currently licensed under the GNU Public License version 2.
 I am considering changing this to a BSD license, but I need to do more investigation.
+
+django-attachments (in the /attachments directory) is a very slightly modified
+version of the real django-attachments.  It has a different license.  See /attachments/LICENSE
+
+IronTickets includes and uses jquery which is dual-licensed under the MIT and GPL licenses.
+
+Please check out the about page inside IronTickets for more information on the use of different components.
