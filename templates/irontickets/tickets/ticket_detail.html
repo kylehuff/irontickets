@@ -41,6 +41,10 @@
                     <td>Status</td>
                     <td>{{ ticket.status.name }}</td>
                 </tr>
+                <tr>
+                    <td>Source</td>
+                    <td>{{ ticket.source.name }}</td>
+                </tr>
                 {% if ticket.duplicateof %}
                     <tr>
                         <td colspan="2">Dupe: <A HREF="{% url ticketdetail ticket.duplicateof.pk %}" title="{{ ticket.duplicateof.summary }}">{{ ticket.duplicateof.pk }} - {{ ticket.duplicateof.summary|truncatewords:4 }}</A></td>
