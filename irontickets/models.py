@@ -71,12 +71,32 @@ class CompanyManager(models.Manager):
         return self.filter(created=weekstart, created__lte=weekstop)
 
 
+
+SELFSIGNUPTYPE = (
+    (1, 'POP3'),
+    (2, 'POP3-TLS'),
+    (3, 'POP3S'),
+    (4, 'IMAP'),
+    (5, 'IMAP-TLS'),
+    (6, 'IMAP-SSL'),
+#    (7, 'HTTP'),       #Reserved for future use
+#    (8, 'HTTPS'),      #Reserved for future use
+#    (9, 'HTTP-TLS'),   #Reserved for future use
+)
+
 class Company(CRUDObject):
     objects                     = CompanyManager()
     name                        = models.CharField(max_length=30)
     type                        = models.ForeignKey(CompanyType)
     website                     = models.URLField(null=True,blank=True)
     status                      = models.ForeignKey(CompanyStatus, related_name='companystatus_set', default='Active', null=False, blank=False)
+    selfsignup                  = models.BooleanField(default=False)
+    selfsignupdomain            = models.CharField(max_length=255,null=True,blank=True)
+    selfsignuptype              = models.IntegerField(null=True,blank=True,choices=SELFSIGNUPTYPE)
+    selfsignuphost              = models.CharField(max_length=255,null=True,blank=True)
+    selfsignupport              = models.IntegerField(null=True,blank=True)
+    selfsignupstripdomain       = models.BooleanField(default=True)
+    
     #Agreements
     #Team
     #CompanyEmployees
