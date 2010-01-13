@@ -71,7 +71,6 @@ class CompanyManager(models.Manager):
         return self.filter(created=weekstart, created__lte=weekstop)
 
 
-
 SELFSIGNUPTYPE = (
     (1, 'POP3'),
     (2, 'POP3-TLS'),

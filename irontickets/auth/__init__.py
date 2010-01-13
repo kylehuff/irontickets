@@ -12,81 +12,94 @@ import poplib
 #    (5, 'IMAP-TLS'),
 #    (6, 'IMAP-SSL'),
 
-
 class POP3Backend:
     """
-    Authenticate against a mail server via POP3+TLS
+    Authenticate against a mail server using POP3
     """
 
-    def authenticate(self, username=None, password=None):
-        if not email_re.search(username):
-            return None
-        
-        user_part = username.split('@')[0]
-        domain_part = username.split('@')[1]
-        
+    def hunt_for_user(self, user_string):
+        usr = None
+        user_part = None
+        domain_part = None
         try:
-            usr = User.objects.get(email=username)
+            if email_re.search(user_string):
+                user_part = user_string.split('@')[0]
+                domain_part = user_string.split('@')[1]
+                usr = User.objects.get(email=user_string)
+            else:
+                usr = User.objects.get(username=user_string)
         except User.ObjectNotFound:
-            print 'User not found via e-mail address'
-            return None
+            pass
         
-        if not usr:
-            try:
-                company = Company.objects.get(selfsignupdomain=domain_part)
-                print 'located company record by domain_part'
-            except Company.ObjectNotFound:
-                print 'Unable to locate company by domain part %s' %(domain_part)
-                return None
-        
-        if usr:
-            try:
-                prof = usr.get_profile()
-            except:
-                print 'Unable to get profile for username %s' %(username)
-            
-            try:
-                company = prof.company
-            except:
-                print 'Unable to jump from profile to company for username %s' %(username)
-                return None
-        else:
-            return None
-            #BUG: Handle a user without a profile by checking domain_part
-        
-        print 'Ready for auth with:'
-        print user_part, domain_part
-        print usr, prof, company
+        return usr, user_part, domain_part
 
+
+    def check_pop3s(self, server, port, username, password):
         #TODO: Need to catch the mail server being down and try to auth off cached info in local db
-        pop = poplib.POP3_SSL(company.selfsignuphost, port=int(company.selfsignupport) or 995)
-        if company.selfsignupstripdomain:
-            print 'Trying to auth as %s' %(user_part)
-            pop.user(user_part)
-        else:
-            print 'Trying to auth as %s' %(username)
+        print 'Attempting to authenticate %s using %s' %(username, server)
+        try:
+            pop = poplib.POP3_SSL(server, port or 995)
             pop.user(username)
+            result = pop.pass_(password)
+            pop.quit()
+            print result or 'failed!'
+            return result
+        except:
+            return None
+
+    def authenticate(self, username=None, password=None):
+        user, user_part, domain_part = self.hunt_for_user(username)
         
-        result = pop.pass_(password)
-        pop.quit()
-
-        if result:
-            print result
-            login_valid = True
+        if user:
+            prof = user.get_profile()
+            company = prof.company
         else:
-            print "failed"
-            login_valid = False
+            prof = None
+            company = None
 
-        if login_valid:
-            try:
-                user = User.objects.get(email=username)
-            except User.DoesNotExist:
-                user = User(username=username[:25], password=password, email=username)
-                user.is_staff = False
-                user.is_superuser = False
+        if user and company.selfsignuphost:
+            print 'User exists and selfsignup allowed'
+            if company.selfsignupstripdomain:
+                try_user = user_part
+            else:
+                try_user = username
+                
+            if self.check_pop3s(company.selfsignuphost, int(company.selfsignupport) or 995, try_user, password):
+                user.set_password(password)
                 user.save()
-            return user
-        return None
+                print 'login successful'
+                return user
+            else:
+                print 'invalid remote username/password'
+                return None
+        
+        if not user and domain_part:
+            print 'user not found, checking domain_part'
+            try:
+                company = Company.object.get(selfsignupdomain=domain_part)
+                print 'company located by domain_part'
+            except Company.ObjectNotFound:
+                print 'unable to locate company by domain_part'
+                return None
+            
+            if company.allowselfsignup:
+                print 'company allows selfsignup'
+                if self.check_pop3s(company.selfsignuphost, int(company.selfsignupport) or 995, username, password):
+                    print 'login successful'
+                    user = User(username=user_part[:25], password=password, email=username)
+                    user.set_password(password)
+                    user.is_staff = False
+                    user.is_superuser = False
+                    user.save()
+                    return user
+                else:
+                    print 'bad remote username/password'
+                    return None
+            else:
+                print 'selfsignup not allowed'
+                return None
+        return None #We should never get here...
+
 
     def get_user(self, user_id):
         try:
