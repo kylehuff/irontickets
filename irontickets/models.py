@@ -12,12 +12,20 @@ from time import time
 
 #BUG: Most of the FKs to the User object should actually link to the ITProfile object
 
+class DeletedManager(models.Manager):
+    def get_query_set():
+        self.get_query_set().filter(deleted=false)
+
+
 class CRUDObject(models.Model):
+    all_objects                 = models.Manager()
+    objects                     = DeletedManager()
+    deleted                     = models.BooleanField(default=False)
     created                     = models.DateTimeField(auto_now_add=True)
     createdby                   = models.ForeignKey(User,null=True,blank=True,related_name='%(class)s_createdby_set')
     updated                     = models.DateTimeField(auto_now_add=False, auto_now=True)
     updatedby                   = models.ForeignKey(User,null=True,blank=True,related_name='%(class)s_updatedby_set')
-
+    
     def save(self):
         if self.pk:
             self.updated        = time()
@@ -26,9 +34,12 @@ class CRUDObject(models.Model):
             self.created        = time()
             self.createdby      = threadlocals.get_current_user()
         super(CRUDObject, self).save()
-
+        
+    #TODO: Override delete
+    
     class Meta:
         abstract = True
+
 
 class CompanyType(models.Model):
     name                        = models.CharField(max_length=15,primary_key=True)
