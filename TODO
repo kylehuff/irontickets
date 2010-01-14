@@ -37,6 +37,7 @@ v0.3
 * Notification improvement (e-mail, xmpp, snpp, sms, etc...)
 
 Future / Ideas / Notes:
+* django-piston
 * Customer Data import
 * Auditing
 * django-invoice
