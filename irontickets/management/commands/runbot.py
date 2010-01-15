@@ -80,9 +80,15 @@ class ITBot(JabberBot):
             user.
         """
         if args:
-            user = User.objects.filter(email=args)
+            try:
+                user = User.objects.filter(email=args)
+            except User.DoesNotExist:
+                return 'User %s does not exist' %(args)
         else:
-            user = User.objects.get(email=self.get_name_part(mess.getFrom()))
+            try:
+                user = User.objects.get(email=self.get_name_part(mess.getFrom()))
+            except User.DoesNotExist:
+                return 'Unable to find your user account: %s' %(self.get_name_part(mess.getFrom()))
             
         tickets = Ticket.objects.filter(assignedto=user)
         s = ''
