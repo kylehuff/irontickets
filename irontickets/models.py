@@ -11,6 +11,7 @@ from datetime import date, timedelta
 from time import time
 
 #BUG: Most of the FKs to the User object should actually link to the ITProfile object
+#BUG: Add code to sync users and profiles.  If no profile, create one.
 
 class CRUDObject(models.Model):
     created                     = models.DateTimeField(auto_now_add=True)
