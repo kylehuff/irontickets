@@ -6,8 +6,6 @@ register = template.Library()
 
 def do_ifloaded(parser, token):
     bits = token.split_contents()[1:]
-    print 'bits'
-    print bits[0]
     var = bits[0]
     nodelist_true = parser.parse(('else', 'endifloaded'))
     token = parser.next_token()
@@ -44,7 +42,6 @@ class IfLoadedNode(template.Node):
     
     def render(self, context):
         for app in settings.INSTALLED_APPS:
-            print 'comparing [%s] and [%s]' %(str(app), str(self.var))
             if str(app) == str(self.var):
                 return self.nodelist_true.render(context)
         return self.nodelist_false.render(context)
