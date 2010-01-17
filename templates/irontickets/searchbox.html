@@ -1,6 +1,6 @@
-<form action="#" class="searchform">
+<form action="{% url haystack_search %}" method="get" class="searchform">
     {% csrf_token %}
-    <input name="search_query" class="textbox" type="text" />
+    <input name="q" class="textbox" type="text" value="{{ request.REQUEST.q }}" />
     {% with "search" as buttonname %}
         {% with "Search" as buttonvalue %}
             {% include "irontickets/elements/formbutton.html" %}
