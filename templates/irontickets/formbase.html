@@ -1,7 +1,7 @@
 {% extends "irontickets/base.html" %}
 {% block sidemenu %}{% endblock %}
 {% block content %}
-    <FORM ID="form" ACTION="{% firstof formaction "." %}" METHOD="POST">
+    <FORM ACTION="{% firstof formaction "." %}" METHOD="POST">
         {% csrf_token %}
             <TABLE>
                 {{ form.as_table }}
