@@ -1,0 +1,3 @@
+{{ object.summary }}
+{{ object.creator.get_full_name }}
+{{ object.description }}

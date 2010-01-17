@@ -40,6 +40,7 @@ urlpatterns = patterns('irontickets.views',
     (r'^report/', include('irontickets.urls.report')),
     (r'^help/', include('irontickets.urls.help')),
 
+    (r'^search/', include('haystack.urls')),
     (r'^comment/', include('django.contrib.comments.urls')),
     (r'^attachments/', include('attachments.urls')),
     (r'^avatar/', include('avatar.urls')),

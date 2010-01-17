@@ -1,4 +1,4 @@
-<form action="#" class="searchform">
+<form action="{% url haystack_search %}" method="get" class="searchform">
     {% csrf_token %}
     <input name="search_query" class="textbox" type="text" />
     {% with "search" as buttonname %}
