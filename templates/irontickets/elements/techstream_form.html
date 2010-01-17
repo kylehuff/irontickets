@@ -1,0 +1,13 @@
+<form action="{% url techstreamnew %}" method="POST">
+    {% csrf_token %}
+    <div class="ui-widget">
+        <div class="ui-widget-header ui-corner-top">
+            <span class="ui-icon ui-icon-comment"></span>Note
+        </div>
+        <div class="ui-corner-bottom">
+            {{ TECHSTREAMFORM.as_p }}
+        </div>
+    </div>
+    <input type="SUBMIT" name="POST" class="fg-button" value="Add Note" />
+    <input type="HIDDEN" name="next" value="{{ request.path }}" />
+</form>

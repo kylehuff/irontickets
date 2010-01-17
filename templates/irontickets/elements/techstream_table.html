@@ -1,0 +1,18 @@
+<TABLE class="nicelist">
+    <THEAD>
+        <TR>
+            <TH width="125">Created</TH>
+            <TH width="50">By</TH>
+            <TH width="400">Note</TH>
+        </TR>
+    </THEAD>
+    <TBODY>
+        {% for techstream in techstream_list %}
+            <TR id="techstream-{{ techstream.pk }}" class="{% cycle row1,row2%}">
+                <TD>{{ techstream.created }}</TD>
+                <TD>{{ techstream.createdby }}</TD>
+                <TD>{{ techstream.note }}</TD>
+            </TR>
+        {% endfor %}
+    </TBODY>
+</TABLE>

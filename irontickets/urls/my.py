@@ -8,6 +8,9 @@ from django.views.generic.create_update import create_object, delete_object, upd
 from django.views.generic.list_detail import object_detail, object_list
 from django.views.generic.simple import direct_to_template
 
+from irontickets.forms import TechStreamForm
+from irontickets.models import TechStream
+
 urlpatterns = patterns('oi.views',
     url(r'^$', direct_to_template, {
         'template': 'irontickets/my/index.html',
@@ -15,6 +18,27 @@ urlpatterns = patterns('oi.views',
             'title': 'My Home',
         },
     }, name='myhome'),
+
+    url(r'^stream/$', login_required(object_list), {
+        #BUG: This should be limited to the currently logged in tech
+        'queryset': TechStream.objects.all(),
+        'template_name': 'irontickets/techstream/techstream_list.html',
+        'allow_empty': True,
+        'template_object_name': 'techstream',
+        'extra_context': {
+            'title': 'TechStream',
+        },
+    }, name = 'techstream'),
+
+    url(r'^stream/new/$', create_object, {
+        'form_class': TechStreamForm,
+        'login_required': True,
+        'template_name': 'irontickets/techstream/techstream_new.html',
+        'extra_context': {
+            'title': 'New TechStream'
+        },
+    }, name='techstreamnew'),
+
 #    url(r'^tickets/$', my_tickets, name='mytickets'),
 #    url(r'^report/$', my_reports, name='myreports'),
 #    url(r'^timecard/$', gndn, name='mytimecard'),

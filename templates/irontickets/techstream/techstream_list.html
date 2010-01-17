@@ -1,0 +1,7 @@
+{% extends "irontickets/base.html" %}
+{% block jqready %}
+    $('.nicelist').flexigrid({title: 'Techstream', showTableToggleBtn: false});
+{% endblock %}
+{% block content %}
+    {% include "irontickets/elements/techstream_table.html" %}
+{% endblock %}
