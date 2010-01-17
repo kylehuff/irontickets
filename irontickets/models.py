@@ -19,9 +19,6 @@ class DeletedManager(models.Manager):
 
 
 class CRUDObject(models.Model):
-    all_objects                 = models.Manager()
-    objects                     = DeletedManager()
-    deleted                     = models.BooleanField(default=False)
     created                     = models.DateTimeField(auto_now_add=True)
     createdby                   = models.ForeignKey(User,null=True,blank=True,related_name='%(class)s_createdby_set')
     updated                     = models.DateTimeField(auto_now_add=False, auto_now=True)
