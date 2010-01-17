@@ -1,4 +1,5 @@
 {% extends "irontickets/base.html" %}
+{% load avatar_tags %}
 {% block jqready %}
     $("#tabs").tabs();
     $('.nicelist').flexigrid({showTableToggleBtn: false});
@@ -16,7 +17,7 @@
 {% endblock %}
 {% block content %}
     <a name="UserDetail"></a>
-    <h2><img class="icon" src="{{ MEDIA_URL }}/irontickets/icons/user.png" />{{ usr.username }}  ({{ usr.email }})</h2>
+    <h2><img class="icon" src="{% avatar_url user %}" />{{ user.username }}  ({{ user.email }})</h2>
     {% if usr.last_name and usr.first_name %}
         <p>{{ usr.last_name }}, {{ usr.first_name }}</p>
     {% endif %}
