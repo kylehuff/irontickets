@@ -8,8 +8,18 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib.formtools.wizard import FormWizard
 from django.contrib.auth.models import User
-from irontickets.models import Ticket, TicketStatus, Company, ITProfile, ContactTitle
+from irontickets.models import Ticket, TicketStatus, Company, ITProfile, ContactTitle, TechStream
 from irontickets.itformwiz import FormWizard
+
+
+class TechStreamForm(ModelForm):
+    error_css_class = 'ui-state-error'
+    required_css_class = 'requiredfield'
+    
+    class Meta:
+        model = TechStream
+        fields = ('note')
+
 
 class TicketForm(ModelForm):
     error_css_class = 'ui-state-error'

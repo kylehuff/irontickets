@@ -39,6 +39,21 @@ class CRUDObject(models.Model):
         abstract = True
 
 
+class TechStream(CRUDObject):
+    note                        = models.CharField(max_length=255, null=False,blank=False)
+    
+    def get_absolute_url(self):
+        return reverse('irontickets_lifestream', args=[self.id])
+    
+    def __unicode__(self):
+        return self.name
+    
+    class Meta:
+        ordering                = ['created']
+        verbose_name            = 'Tech Stream'
+        verbose_name_plural     = 'Tech Streams'
+
+
 class CompanyType(models.Model):
     name                        = models.CharField(max_length=15,primary_key=True)
 
