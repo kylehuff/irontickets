@@ -18,7 +18,7 @@ class TechStreamForm(ModelForm):
     
     class Meta:
         model = TechStream
-        fields = ('note')
+        fields = ('note',)
 
 
 class TicketForm(ModelForm):

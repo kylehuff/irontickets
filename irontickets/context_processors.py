@@ -1,5 +1,7 @@
-from irontickets.models import TicketStatus, TicketPriority
 from django.contrib.auth.models import User
+from irontickets.models import TicketStatus, TicketPriority
+from irontickets.forms import TechStreamForm
+
 
 def tickets(request):
     """
@@ -23,3 +25,11 @@ def employees(request):
     Returns employees as defined by django.contrib.admin.
     """
     return {'EMPLOYEES': User.objects.filter(is_staff=True)}
+
+
+def forms(request):
+    """
+    Adds context variables for various forms
+    """
+    return {'TECHSTREAMFORM': TechStreamForm()}
+
