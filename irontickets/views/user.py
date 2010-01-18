@@ -81,5 +81,16 @@ def user_new_ticket(request, object_id):
         context_instance=RequestContext(request)
     )
 
+@login_required
+def user_techstream(request):
+    return object_list(
+        request,
+        queryset = request.user.techstream_createdby_set.all(),
+        template_name = 'irontickets/techstream/techstream_list.html',
+        allow_empty = True,
+        template_object_name = 'techstream',
+        extra_context = {
+            'title': 'TechStream',
+        })
 
 

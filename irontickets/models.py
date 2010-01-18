@@ -30,7 +30,8 @@ class CRUDObject(models.Model):
             self.updatedby      = threadlocals.get_current_user()
         else:
             self.created        = time()
-            self.createdby      = threadlocals.get_current_user()
+            if not self.createdby:
+                self.createdby      = threadlocals.get_current_user()
         super(CRUDObject, self).save()
         
     #TODO: Override delete
@@ -43,10 +44,10 @@ class TechStream(CRUDObject):
     note                        = models.CharField(max_length=255, null=False,blank=False)
     
     def get_absolute_url(self):
-        return reverse('irontickets_lifestream', args=[self.id])
+        return reverse('techstream')
     
     def __unicode__(self):
-        return self.name
+        return '%s - %s' %(self.createdby, self.note)
     
     class Meta:
         ordering                = ['created']

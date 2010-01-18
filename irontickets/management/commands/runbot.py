@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
 from django.contrib.comments.models import Comment
 
-from irontickets.models import Ticket
+from irontickets.models import Ticket, TechStream
 
 try:
     import xmpp
@@ -70,8 +70,22 @@ class ITBot(JabberBot):
 #           unchanged) and add optional comment y
 # com 1 - show most recent comment on ticket 1
 # asn 1 x - Assign ticket 1 to username or email address x
+# n [note] - Add note to techstream
 
-
+    @botcmd
+    def n(self, mess, args):
+        try:
+            ts = TechStream(
+                note=args,
+                createdby=User.objects.get(email=self.get_name_part(mess.getFrom()))
+            )
+            ts.save()
+            return 'Added note'
+        except User.DoesNotExist:
+            return 'Unable to find you'
+        return 'Unable to add note'
+    
+    
     @botcmd
     def list(self, mess, args):
         """

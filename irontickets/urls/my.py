@@ -10,6 +10,7 @@ from django.views.generic.simple import direct_to_template
 
 from irontickets.forms import TechStreamForm
 from irontickets.models import TechStream
+from irontickets.views.user import user_techstream
 
 urlpatterns = patterns('oi.views',
     url(r'^$', direct_to_template, {
@@ -19,16 +20,7 @@ urlpatterns = patterns('oi.views',
         },
     }, name='myhome'),
 
-    url(r'^stream/$', login_required(object_list), {
-        #BUG: This should be limited to the currently logged in tech
-        'queryset': TechStream.objects.all(),
-        'template_name': 'irontickets/techstream/techstream_list.html',
-        'allow_empty': True,
-        'template_object_name': 'techstream',
-        'extra_context': {
-            'title': 'TechStream',
-        },
-    }, name = 'techstream'),
+    url(r'^stream/$', user_techstream, name = 'techstream'),
 
     url(r'^stream/new/$', create_object, {
         'form_class': TechStreamForm,
